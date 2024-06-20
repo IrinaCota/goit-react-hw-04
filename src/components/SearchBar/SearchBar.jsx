@@ -1,4 +1,3 @@
-// ../SearchBar/SearchBar.js
 import { BsSearch } from 'react-icons/bs';
 import toast, { Toaster } from 'react-hot-toast';
 import PropTypes from 'prop-types';

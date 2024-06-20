@@ -1,4 +1,3 @@
-// ../ImageCard/ImageCard.js
 import PropTypes from 'prop-types';
 import css from './ImageCard.module.css';
 

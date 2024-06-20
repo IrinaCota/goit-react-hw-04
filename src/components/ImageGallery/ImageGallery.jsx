@@ -1,5 +1,3 @@
-// ../ImageGallery/ImageGallery.js
-
 import PropTypes from 'prop-types';
 import ImageCard from '../ImageCard/ImageCard';
 import css from './ImageGallery.module.css';
