@@ -1,27 +1,36 @@
-import ImageCard from "../ImageCard/ImageCard";
-
-import css from './ImageGallery.module.css';
+// ../ImageGallery/ImageGallery.js
 
 import PropTypes from 'prop-types';
+import ImageCard from '../ImageCard/ImageCard';
+import css from './ImageGallery.module.css';
 
 function ImageGallery({ images, onImageClick }) {
   return (
     <ul className={css.gallery}>
-      {images.map(({ id, urls: { small, regular }, description }) => (
-        <li className={css.galleryItem} key={id}>
+      {images.map(image => (
+        <li className={css.galleryItem} key={image.id}>
           <ImageCard
-            url={small}
-            description={description}
-            onImageClick={() => onImageClick({ url: regular, description })} />
+            image={image}
+            onImageClick={() => onImageClick(image)}
+          />
         </li>
       ))}
     </ul>
   );
 }
 
-export default ImageGallery;
-
 ImageGallery.propTypes = {
-  images: PropTypes.array,
-  onImageClick: PropTypes.func,
-}
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      urls: PropTypes.shape({
+        small: PropTypes.string.isRequired,
+        regular: PropTypes.string.isRequired,
+      }).isRequired,
+      alt_description: PropTypes.string,
+    })
+  ).isRequired,
+  onImageClick: PropTypes.func.isRequired,
+};
+
+export default ImageGallery;

@@ -1,3 +1,4 @@
+// ./App.js
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import fetchImages from '../API/unsplash-api-img';

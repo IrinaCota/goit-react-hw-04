@@ -1,8 +1,9 @@
-import css from './ImageCard.module.css';
+// ../ImageCard/ImageCard.js
 import PropTypes from 'prop-types';
+import css from './ImageCard.module.css';
 
 const ImageCard = ({ image, onImageClick }) => {
-     return (
+  return (
     <div>
       <img
         src={image.urls.small}
@@ -14,8 +15,6 @@ const ImageCard = ({ image, onImageClick }) => {
   );
 }
 
-export default ImageCard;
-
 ImageCard.propTypes = {
   image: PropTypes.shape({
     urls: PropTypes.shape({
@@ -25,3 +24,5 @@ ImageCard.propTypes = {
   }).isRequired,
   onImageClick: PropTypes.func.isRequired,
 };
+
+export default ImageCard;
