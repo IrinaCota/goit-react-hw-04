@@ -15,7 +15,6 @@ const initialModalParams = {
 };
 
 function App() {
-
   const [searchQuery, setSearchQuery] = useState('');
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,24 +22,21 @@ function App() {
   const [page, setPage] = useState(1);
   const [showLoadMoreBtn, setShowLoadMoreBtn] = useState(false);
   const [modalParams, setModalParams] = useState(initialModalParams);
- 
- const appRef = useRef();
+  const appRef = useRef();
 
   useEffect(() => {
-    if (searchQuery === '') {
-      return;
-    }
+    if (searchQuery === '') return;
 
     async function getData() {
       try {
         setIsLoading(true);
         setIsError(false);
         const { results, total_pages } = await fetchImages(searchQuery, page);
-        setImages(prevImages => {
-          return [...prevImages, ...results];
-        });
-        setShowLoadMoreBtn(total_pages && total_pages !== page);
+        console.log('Results', results);
+        setImages(prevImages => [...prevImages, ...results]);
+        setShowLoadMoreBtn(page < total_pages);
       } catch (error) {
+        console.error('Error fetching images:', error);
         setIsError(true);
       } finally {
         setIsLoading(false);
@@ -57,11 +53,11 @@ function App() {
   };
 
   const handleLoadMoreClick = () => {
-    setPage(page + 1);
+    setPage(prevPage => prevPage + 1);
   };
 
-  const handleImageClick = (url, description) => {
-    setModalParams({ isOpen: true, url, description });
+  const handleImageClick = ({ urls: { regular }, alt_description }) => {
+    setModalParams({ isOpen: true, url: regular, description: alt_description });
   };
 
   const handleModalClose = () => {
@@ -70,26 +66,21 @@ function App() {
 
   useEffect(() => {
     if (page === 1) return;
-
     appRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, [images, page]);
 
   return (
     <div ref={appRef}>
       <SearchBar onSearch={handleSearch} />
-
       {isError && <ErrorMessage />}
-
       {images.length > 0 && (
-        <ImageGallery items={images} onImageClick={handleImageClick} />
+        <ImageGallery images={images} onImageClick={handleImageClick} />
       )}
-
       {images.length > 0 && !isLoading && showLoadMoreBtn && (
         <LoadMoreBtn onClick={handleLoadMoreClick} />
       )}
-
       {isLoading && <Loader />}
-      {modalParams && (
+      {modalParams.isOpen && (
         <ImageModal
           url={modalParams.url}
           description={modalParams.description}

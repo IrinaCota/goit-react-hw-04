@@ -1,6 +1,7 @@
 import { BsSearch } from 'react-icons/bs';
 import toast, { Toaster } from 'react-hot-toast';
-import css from './SearchBar.module.css'
+import css from './SearchBar.module.css';
+import PropTypes from 'prop-types';
 
 export default function SearchBar({ onSearch }) {
     const handleSubmit = event => {
@@ -29,3 +30,7 @@ export default function SearchBar({ onSearch }) {
         </header>
     );
 }
+
+SearchBar.propTypes = {
+  onSearch: PropTypes.func,
+};
