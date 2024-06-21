@@ -1,5 +1,5 @@
 import ReactModal from "react-modal";
-
+import PropTypes from 'prop-types';
 import css from "./ImageModal.module.css";
 
 const ImageModal = ({ isOpen, onClose, url, description }) => {
@@ -18,3 +18,10 @@ const ImageModal = ({ isOpen, onClose, url, description }) => {
 };
 
 export default ImageModal;
+
+ImageModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  url: PropTypes.string.isRequired,
+  description: PropTypes.string,
+};
